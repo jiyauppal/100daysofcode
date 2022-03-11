@@ -21,10 +21,13 @@ public:
             prev = prev->next;
         tail = prev->next;
         for(int i = 0; i < right-left;i++){
-            temp = prev->next;
+            /* temp = prev->next;
             prev->next = tail->next;
-            tail->next = tail->next->next;
+            tail->next = tail->next->next; // using exact logic of swap
             prev->next->next = temp;
+            */
+            swap(prev->next, tail->next->next);//using swap operation
+            swap(prev->next, tail->next);
         }
         return dummy.next;
     }
