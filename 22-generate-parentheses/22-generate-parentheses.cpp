@@ -15,3 +15,5 @@ public:
            if(n>0) generate(res, str+"(", n-1, m+1); 
     }
 };
+//n = number of "(" that had not put into the string
+//m = number of "(" - ")" int the string
