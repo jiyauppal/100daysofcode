@@ -1,15 +1,22 @@
 class Solution {
 public:
-    int minDominoRotations(vector<int>& A, vector<int>& B) {
-  auto top = A[0], bot = B[0], top1 = 0, bot1 = 0, top2 = 0, bot2 = 0;
-  for (auto i = 0; i < A.size(); ++i) {
-    if (A[i] != top && B[i] != top) top = 0;
-    if (A[i] != bot && B[i] != bot) bot = 0;
-    top1 += A[i] == top;
-    bot1 += B[i] == top;
-    top2 += A[i] == bot;
-    bot2 += B[i] == bot;
-  }
-  return top || bot ? min(A.size() - max(top1, bot1), A.size() - max(top2, bot2)) : -1;
-}
+    int minDominoRotations(vector<int>& A, vector<int>& B){
+        vector<int> cA(7), cB(7), cS(7);
+        int n = A.size();
+        for(int i = 0; i < n; i++){
+            int a = A[i];
+            int b = B[i];
+            cA[a]++;
+            cB[b]++;
+            if(a==b) cS[a]++;
+        }
+        int ans = n;
+        for(int j = 1; j <= 6; j++){
+            if(cA[j] + cB[j] - cS[j] == n){
+                int minSwap = min(cA[j], cB[j]) - cS[j];
+                ans = min(ans, minSwap);
+            }
+        }
+        return (n == ans) ? -1 : ans;
+    }
 };
