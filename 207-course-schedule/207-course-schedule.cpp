@@ -26,8 +26,6 @@ public:
         while(!q.empty()){
             int curr = q.front();
             q.pop();
-            if(vis.find(curr)!=vis.end())
-                continue;
             for(auto nb : graph[curr]){
                 indegree[nb] -= 1;
                 if(indegree[nb] == 0){
