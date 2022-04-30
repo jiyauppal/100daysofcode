@@ -1,28 +1,26 @@
 class Solution {
 public:
-    vector<vector<int>> createGraph(int numCourses, vector<vector<int>>& pre){
-        vector<vector<int>> graph(numCourses);
-        for(auto it : pre){
-            int u = it[0];
-            int v = it[1];
-            graph[v].push_back(u);
-        }
-        return graph;
-    }
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<int> indegree(numCourses, 0);
-        vector<vector<int>> graph = createGraph(numCourses, prerequisites);
-        for(int i = 0; i < numCourses; i++)
-            for(int it : graph[i])
-                indegree[it]++;
-            
-        queue<int> q;
+    bool canFinish(int n, vector<vector<int>>& pre) {
+        vector<vector<int>> graph(n);
         int ans = 0;
+            for(auto it : pre){
+                int u = it[0];
+                int v = it[1];
+                graph[v].push_back(u);
+            }
+        vector<int> indegree(n, 0);
+        for(int i = 0; i < n; i++){
+            for(auto it : graph[i]){
+                indegree[it]++;
+            }
+        }
+        queue<int> q;
         unordered_set<int> vis;
-        for(int i = 0; i < numCourses; i++){
-            if(indegree[i] == 0){
+        for(int i = 0; i < n; i++){
+            if(indegree[i] == 0)
+            {
                 q.push(i);
-                ans += 1;
+                ans+=1;
             }
         }
         while(!q.empty()){
@@ -30,18 +28,16 @@ public:
             q.pop();
             if(vis.find(curr)!=vis.end())
                 continue;
-            vis.insert(curr);
-            for(int j : graph[curr]){
-                indegree[j] -= 1;
-                if(indegree[j] == 0){
-                    q.push(j);
-                    ans += 1;
-                }
+            for(auto nb : graph[curr]){
+                indegree[nb] -= 1;
+                if(indegree[nb] == 0){
+                q.push(nb);
+                ans += 1;
+              }
             }
         }
-        if(numCourses == ans)
-            return true;
-        else
-            return false;
+        if(ans == n) return true;
+        
+        return false;
     }
 };
