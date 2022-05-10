@@ -1,21 +1,20 @@
 class Solution {
 public:
-   vector<vector<int>> combinationSum3(int k, int n) {
-    vector<vector<int>> result;
-    vector<int> path;
-    backtrack(result, path, 1, k, n);
-    return result;
-}
-
-void backtrack(vector<vector<int>> &result, vector<int> &path, int start, int k, int target){
-    if(target==0&&k==0){
-        result.push_back(path);
-        return;
+    void findcombinations(int idx, vector<vector<int>>& ans, int k, int target, vector<int>& output){
+        if(target == 0 && k == 0){
+            ans.push_back(output);
+            return;
+        }
+        for(int i = idx; i <= 10-k && i <= target; ++i){
+            output.push_back(i);
+            findcombinations(i+1, ans, k-1, target-i, output);
+            output.pop_back();
+        }
     }
-    for(int i=start;i<=10-k&&i<=target;i++){
-        path.push_back(i);
-        backtrack(result,path,i+1,k-1,target-i);
-        path.pop_back();
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> ans;
+        vector<int> output;
+        findcombinations(1, ans, k, n, output);
+        return ans;
     }
-}
 };
