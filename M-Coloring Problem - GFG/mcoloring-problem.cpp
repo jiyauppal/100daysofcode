@@ -10,8 +10,7 @@ using namespace std;
 bool isPossible(int idx, int i, int color[], bool graph[101][101],int n){
     for(int k = 0; k < n; k++){
         if(k != i && graph[k][i] == 1 && color[k] == idx){
-            return false;
-        }
+        return false;}
     }
     return true;
 }
@@ -19,10 +18,10 @@ bool solve(int i, int color[], bool graph[101][101], int m, int n){
     if(i == n) return true;
     
     for(int idx = 1; idx <= m; idx++){
-        if(isPossible(idx, i, color, graph, n)){
-         color[i] = idx;
-         if(solve(i+1, color, graph, m, n)) return true;
-         color[i] = 0;
+        if(isPossible(idx, i, color, graph, n )) {
+            color[i] = idx;
+            if(solve(i+1, color, graph, m, n)) return true;
+            color[i] = 0;
         }
     }
     return false;
