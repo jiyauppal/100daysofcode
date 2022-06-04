@@ -1,33 +1,33 @@
 class Solution {
 public:
-    void solve(int col,int n, vector<vector<string>> &ans, vector<string> &board,vector<int> &left, vector<int> &upperDiagonal, vector<int> &lowerDiagonal){
-        if(col == n){
-            ans.push_back(board);
-            return;
-        }
-        for(int row = 0; row < n; row++){
-            if(left[row] == 0 && lowerDiagonal[row+col] == 0 && upperDiagonal[n-1+col-row] == 0){
-                board[row][col] = 'Q';
-                left[row] = 1;
-                lowerDiagonal[row + col] = 1;
-                upperDiagonal[n-1+col-row] = 1;
-                solve(col+1, n, ans, board, left, upperDiagonal, lowerDiagonal);
-                board[row][col] = '.';
-                left[row] = 0;
-                lowerDiagonal[row + col] = 0;
-                upperDiagonal[n-1+col-row] = 0;
+    void dfs(int col, int n, vector<int>& l, vector<int>& u, vector<int>& ld, vector<vector<string>> &ans, vector<string>& board){
+        if(col == n) {
+        ans.push_back(board);
+        return;}
+        for(int i = 0; i < n; i++){
+            if(l[i] == 0 && ld[i+col] == 0 && u[n-1+col-i] ==0){
+                board[i][col] = 'Q';
+                l[i] = 1;
+                ld[i+col] = 1;
+                u[n-1+col-i] = 1;
+                dfs(col+1, n, l, u, ld, ans, board);
+                board[i][col] = '.';
+                l[i] = 0;
+                ld[i+col] = 0;
+                u[n-1+col-i] = 0;
             }
         }
+        
+        
     }
     vector<vector<string>> solveNQueens(int n) {
-        vector<vector<string>> ans;
+        vector<vector<string>> ans;  //Resultant Matrix of string
         vector<string> board(n);
         string s(n, '.');
-        for(int i = 0; i < n; i++){
+        for(int i = 0; i < n; i++)
             board[i] = s;
-        }
-        vector<int> left(n, 0), lowerDiagonal(2*n-1,0), upperDiagonal(2*n-1, 0);
-        solve(0, n, ans, board, left, upperDiagonal, lowerDiagonal);
+       vector<int> l(n, 0), u(2*n-1, 0), ld(2*n-1, 0);
+        dfs(0, n, l, u, ld, ans, board);
         return ans;
     }
 };
