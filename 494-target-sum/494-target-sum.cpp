@@ -4,16 +4,16 @@ public:
     int findTargetSumWays(vector<int>& nums, int target) {
         int n = nums.size();
          if (n == 1) 
-            return abs(nums[0]) == abs(target);
+            return abs(nums[0]) == abs(target); //if size of array is 1
         
         int s = 0;
         for(auto i: nums)
-            s += i;
+            s += i; //keeping track of sum of all elements of array
         
-        int sum = (target + s)/2;
+        int sum = (target + s)/2; //value of a sum to minus
         
         if ((s + target) % 2 == 1 || abs(s) < abs(target))
-            return 0;
+            return 0;   //if the sum is less than target or that sum can't be divided into subsets as sum cam't be in decimals
         
         int dp[n+1][sum+1];
 
