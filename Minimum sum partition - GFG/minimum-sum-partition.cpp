@@ -4,10 +4,17 @@ using namespace std;
 
  // } Driver Code Ends
 class Solution{
-
   public:
-	 vector<int> subsetSum(int nums[], int r, int n){
-        bool dp[n+1][r+1];
+    int minimumd(int range, int r, int c, vector<vector<bool>>& dp){
+      for(int i = c-1; i >=0; i--){
+          if(dp[r-1][i] == 1){
+              int subset_sum = i;
+              return range-2*(subset_sum);
+          }
+      }
+    }
+	 int subsetSum(int nums[], int r, int n){
+        vector<vector<bool>> dp(n+1, vector<bool> (r+1));
         vector<int> res;
         for(int i = 0; i < n+1; i++){
             for(int j = 0; j < r+1; j++){
@@ -20,22 +27,13 @@ class Solution{
                     dp[i][j] = dp[i-1][j];
             }
         }
-        for(int j = 0; j <= r/2 ; j++)
-            if(dp[n][j] == true)
-                res.push_back(j);
-        
-        return res;
+       return minimumd(r, n+1, (r/2)+1, dp);
     }
     int minDifference(int nums[], int n) {
         int r = 0;
         for(int i = 0; i < n; i++)
             r+=nums[i];
-        vector<int> vec = subsetSum(nums, r, n);
-        int mn = INT_MAX;
-        for(auto i : vec){
-            mn = min(mn, r-2*i);
-        }
-        return mn;
+        return subsetSum(nums, r, n);
     }
 };
 
