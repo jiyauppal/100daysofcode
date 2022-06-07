@@ -6,46 +6,42 @@ using namespace std;
 class Solution{
 
   public:
-    vector<int>SubsetSum(int a[],int sum,int n){
-        vector<vector<bool>>ans(n+1,vector<bool>(sum+1));
+	 vector<int> subsetSum(int nums[], int r, int n){
+        bool dp[n+1][r+1];
+        vector<int> res;
         for(int i=0;i<n+1;i++){
-            ans[i][0]=true;
+            dp[i][0]=true;
         }
-        for(int i=1;i<sum+1;i++){
-            ans[0][i]=false;
+        for(int i=1;i<r+1;i++){
+            dp[0][i]=false;
         }
-        
-        for(int i=1;i<n+1;i++){
-            for(int j=1;j<sum+1;j++){
-                if(a[i-1]<=j)
-                    ans[i][j]=((ans[i-1][j-a[i-1]])||(ans[i-1][j]));
+        for(int i = 1; i < n+1; i++){
+            for(int j = 1; j < r+1; j++){
+                if(j >= nums[i-1])
+                    dp[i][j] = dp[i-1][j-nums[i-1]] || dp[i-1][j];
                 else
-                    ans[i][j]=ans[i-1][j];
+                    dp[i][j] = dp[i-1][j];
             }
         }
+        for(int j = 0; j <= r/2 ; j++)
+            if(dp[n][j] == true)
+                res.push_back(j);
         
-    vector<int>subset;
-        for(int i=0;i<=sum/2;i++)
-            if(ans[n][i]==true)
-                subset.push_back(i);
-            
-return subset;
+        return res;
     }
-
-  public:
-	int minDifference(int arr[], int n)  { 
-	    int sum=0;
-	    for(int i=0;i<n;i++)
-	        sum+=arr[i];
-	   vector<int>an=SubsetSum(arr,sum,n);
-	    
-	   int mn=INT_MAX;
-	  for(auto i:an)
-	        mn=min(mn,sum-2*i);
-	        
-return mn;
-	} 
+    int minDifference(int nums[], int n) {
+        int r = 0;
+        for(int i = 0; i < n; i++)
+            r+=nums[i];
+        vector<int> vec = subsetSum(nums, r, n);
+        int mn = INT_MAX;
+        for(auto i : vec){
+            mn = min(mn, r-2*i);
+        }
+        return mn;
+    }
 };
+
 
 // { Driver Code Starts.
 int main() 
