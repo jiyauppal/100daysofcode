@@ -1,33 +1,37 @@
 class Solution {
 public:
-    string longestPalindrome(string s) {
-        int n = s.size();
-        vector<vector<bool>> dp(n, vector<bool>(n, false));
-        int start = 0; int maxLen = 1; //keep two start and maxLen pointers to return substr in results
-        //for substring of length 1(as all are palindromic so)
-        for(int i = 0; i < n; i++)
-            dp[i][i] = true;
-        //for substrings of size 2
-        for(int i = 0; i < n; i++){
-            if(s[i] == s[i+1]){
-                dp[i][i+1] = true;
-                start = i;
-                maxLen = 2;
+   string longestPalindrome(string s) {
+
+        int n=s.size();
+        int res=1, start=0;
+        string ans;
+        
+        for(int i=0; i<n; i++)
+        {
+            int l=i-1;
+            int r=i+1;
+            
+            while(l>=0 && s[i]==s[l])
+            {
+                l--;
+            }
+            while(r<n && s[i]==s[r])
+            {
+                r++;
+            }
+            while(l>=0 && r<n && s[l]==s[r])
+            {
+                l--;
+                r++;
+            }
+            int length=(r-1)-(l+1)+1;  
+            if(length>res)
+            {
+                res=length;
+                start=l+1;
             }
         }
-        //for substrings greater than equal size 3
-        for(int k = 3; k <= n; k++) {//here k is size of substring
-            for(int i = 0; i < n-k+1; i++){ //first index of substr
-                int j = i+k-1; //last index of substr
-                if(s[i] == s[j] && dp[i+1][j-1] == true){
-                    dp[i][j] = true;
-                    if(k > maxLen){ //to find longest substring
-                        maxLen = k;
-                        start = i;
-                    }
-                }
-            }
-        }
-        return s.substr(start, maxLen);
-    }
+        ans=s.substr(start,res);
+        return ans;
+}
 };
