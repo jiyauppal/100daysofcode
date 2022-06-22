@@ -3,14 +3,13 @@ public:
     vector<int> productExceptSelf(vector<int>& nums) {
         int n = nums.size();
         vector<int> res(n, 1);
-        int fromS = 1;
-        int fromL = 1;
-        
-        for(int i= 0; i < n; i++){
-            res[i] *= fromS;
-            fromS *= nums[i];
-            res[n-1-i] *= fromL;
-            fromL *= nums[n-1-i];
+        int a = 1;
+        int b = 1;
+        for(int i = 0; i < nums.size(); i++){
+            res[i] *= a;
+            a *= nums[i];
+            res[n-1-i] *= b;
+            b *= nums[n-1-i];
         }
         return res;
     }
