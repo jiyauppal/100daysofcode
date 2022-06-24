@@ -11,19 +11,19 @@
  */
 class Solution {
 public:
-    bool isValid(TreeNode* root, long mn, long mx){
-        if(!root) return true;
-        
-        if(root->val >= mx || root->val <= mn ){
-            return false;
-        }
-           bool l = isValid(root->left, mn, root->val);
-           bool r = isValid(root->right, root->val, mx);
-        
-        return l&&r;
+    void traversal(TreeNode* root, vector<int>& ans){
+        if(!root) return;
+        traversal(root->left, ans);
+        ans.push_back(root->val);
+        traversal(root->right, ans);
     }
     bool isValidBST(TreeNode* root) {
-         bool ans = isValid(root, LONG_MIN, LONG_MAX);
-        return ans;
+        vector<int> ans;
+        traversal(root, ans);
+        for(int i = 1; i < ans.size(); i++){
+            if(ans[i] <= ans[i-1])
+                return false;
+        }
+        return true;
     }
 };
