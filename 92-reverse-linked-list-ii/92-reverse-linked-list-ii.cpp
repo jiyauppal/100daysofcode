@@ -11,24 +11,19 @@
 class Solution {
 public:
     ListNode* reverseBetween(ListNode* head, int left, int right) {
-        if(head == NULL || left == right)
-            return head;
-        ListNode* prev, *tail = NULL, *temp = NULL;
-        ListNode dummy(NULL);
-        prev = &dummy;
-        dummy.next = head;
-        for(int i = 0; i < left-1; i++)
-            prev = prev->next;
-        tail = prev->next;
-        for(int i = 0; i < right-left;i++){
-            /* temp = prev->next;
-            prev->next = tail->next;
-            tail->next = tail->next->next; // using exact logic of swap
+        ListNode* dummy = new ListNode(0);
+        ListNode* prev = dummy;   //to return result
+        ListNode* curr;
+        dummy->next = head;
+        for(int i = 0; i < left-1; i++) 
+            prev = prev->next; // until you find or reach the left index
+        curr = prev->next;   //at left index
+        for(int i = 0; i < right-left; i++){  //loop for right-left times
+            ListNode* temp = prev->next;    // swap the next nodes
+            prev->next = curr->next;
+            curr->next = curr->next->next;
             prev->next->next = temp;
-            */
-            swap(prev->next, tail->next->next);//using swap operation
-            swap(prev->next, tail->next);
         }
-        return dummy.next;
+        return dummy->next;
     }
 };
