@@ -10,27 +10,27 @@
  */
 class Solution {
 public:
-    ListNode* mergeTwo(ListNode* l1, ListNode* l2){
-        if(l1 == NULL) return l2;
-        if(l2 == NULL) return l1;
-        ListNode* head;
-        if(l1->val <= l2->val){
-            head = l1;
-            head->next = mergeTwo(l1->next, l2);
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        ListNode* res;
+        if(list1 == NULL) return list2;
+        if(list2 == NULL) return list1;
+        if(list1->val < list2->val){
+            res = list1;
+            res->next = mergeTwoLists(list1->next, list2);
         }
         else{
-            head = l2;
-            head->next = mergeTwo(l1, l2->next);
+            res = list2;
+            res->next = mergeTwoLists(list2->next, list1);
         }
-          return head;  
+        return res;
     }
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         if(lists.size() == 0) return NULL;
         if(lists.size() == 1) return lists[0];
-        ListNode* res = lists[0];
+        ListNode* ans = lists[0];
         for(int i = 1; i < lists.size(); i++){
-            res = mergeTwo(res, lists[i]);
+            ans = mergeTwoLists(ans, lists[i]);
         }
-        return res;
+        return ans;
     }
 };
