@@ -15,17 +15,12 @@ public:
         if(!root) return 0;
         int lh = height(root->left);
         int rh = height(root->right); //max height of binary tree code snipet
+        if(lh == -1 || rh == -1) return -1;
+        if(abs(lh - rh) > 1) return -1;
         return 1+ max(lh, rh);
     }
     bool isBalanced(TreeNode* root) {
-        if(!root) return true;
-        int lh = height(root->left);
-        int rh = height(root->right);
-        if(abs(lh-rh) > 1) return false;   
-        
-        bool l = isBalanced(root->left);
-        bool r = isBalanced(root->right);
-        if(!l || !r) return false;
+        if(height(root) == -1) return false;
         return true;
     }
 };
