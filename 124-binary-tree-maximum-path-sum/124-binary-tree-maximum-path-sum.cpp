@@ -13,10 +13,10 @@ class Solution {
 public:
     int helper(TreeNode* root, int& maxi){
         if(!root) return 0;
-        int l = max(0, helper(root->left, maxi));
+        int l = max(0, helper(root->left, maxi)); 
         int r = max(0, helper(root->right, maxi));
-        maxi = max(maxi, l+r+root->val);
-        return root->val + max(l, r);
+        maxi = max(maxi, root->val+l+r);  //path sum between more than 2 nodes
+        return root->val + max(l, r); // path sum between two
     }
     int maxPathSum(TreeNode* root) {
         int maxi = INT_MIN;
