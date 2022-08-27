@@ -11,14 +11,12 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        ListNode* dummy = NULL;
-        while(head){
-            ListNode* next = head->next;
-            head->next = dummy;
-            dummy = head;
-            head = next;
-        }
-        return dummy;
+        if(!head || !head->next) return head;
+        ListNode* nHead = reverseList(head->next);
+        head->next->next = head;
+        head->next = NULL;
+        
+        return nHead;
     }
 };
 // Iterative Approach
@@ -33,3 +31,12 @@ public:
 //         }
 //         head = prev;
 //         return head;
+//RECURSIVE APPROACH
+// ListNode* dummy = NULL;
+//         while(head){
+//             ListNode* next = head->next;
+//             head->next = dummy;
+//             dummy = head;
+//             head = next;
+//         }
+//         return dummy;
