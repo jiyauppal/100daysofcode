@@ -1,29 +1,27 @@
 class Solution {
 public:
-    void partitioning(string s, int index, vector<vector<string>>& ans, vector<string>& path){
-        if(index == s.size()){
-            ans.push_back(path);
-            return;
-        } 
-        for(int i = index; i < s.size(); i++){
-            if(isPalindrome(s, index, i)){
-                path.push_back(s.substr(index, i-index+1));
-                partitioning(s, i+1, ans, path);
-                path.pop_back();
-            }
-        }
-    }
-    bool isPalindrome(string s, int start, int end){
-        while(start <= end){
-        if(s[start++] != s[end--])
-            return false;
-        }
+    bool isPalindromic(string s, int i, int j){
+        while(i <= j)
+            if(s[i++] != s[j--])
+                return false;
         return true;
     }
+    void palindromicPartitions(string s, vector<string>& ds, vector<vector<string>>& result, int i){
+        if(i == s.size()){
+            result.push_back(ds);
+            return;
+        }
+        for(int idx = i; idx < s.size(); idx++){
+            if(isPalindromic(s, i, idx)){
+                ds.push_back(s.substr(i, idx-i+1));
+                palindromicPartitions(s, ds, result, idx+1);
+                ds.pop_back();
+            }}
+    }
     vector<vector<string>> partition(string s) {
-        vector<vector<string>> ans;
-        vector<string> path;
-        partitioning(s, 0, ans, path);
-        return ans;
+        vector<string> ds;
+        vector<vector<string>> result;
+        palindromicPartitions(s, ds, result, 0);
+        return result;
     }
 };
