@@ -1,34 +1,34 @@
 class Solution {
 public:
-    bool isValid(vector<vector<char>>& b, int row, int col, char c){
-        for(int i = 0; i < 9; i++){
-            if(b[row][i] == c) return false;
-            if(b[i][col] == c) return false;
-            if(b[3*(row/3)+i/3][3*(col/3)+i%3] == c) return false;
-            
+    bool isValid(int i, int j, vector<vector<char>>& board, char k){
+        for(int l = 0; l < 9; l++){
+            if(board[l][j] == k)
+                return false;
+            if(board[i][l] == k)
+                return false;
+            if(board[3*(i/3) + l/3][3*(j/3) + l%3] == k)
+                return false;
         }
         return true;
     }
-    bool solve(vector<vector<char>>& b){
-        for(int i = 0; i < b.size(); i++){
-            for(int j = 0; j < b[0].size(); j++){
-                if(b[i][j] == '.'){
-                for(char c = '1'; c <= '9'; c++){
-                if(isValid(b, i, j, c)){
-                    b[i][j] = c;
-                    if(solve(b) == true)
-                        return true;
-                    else
-                        b[i][j] = '.';
+    bool solveSudoku(vector<vector<char>>& board) {
+         for(int i = 0; i < board.size(); i++){
+            for(int j = 0; j < board[0].size(); j++){
+                if(board[i][j] == '.'){
+                    for(char k = '1'; k <= '9'; k++){
+                    if(isValid(i, j, board, k)){
+                        board[i][j] = k;
+                        
+                        if(solveSudoku(board))
+                            return true;
+                        else
+                            board[i][j] = '.';
+                    }
                 }
-                }
-                return false;
-                }
+                    return false;
             }
         }
+     }
         return true;
-    }
-    void solveSudoku(vector<vector<char>>& board) {
-        solve(board);
     }
 };
