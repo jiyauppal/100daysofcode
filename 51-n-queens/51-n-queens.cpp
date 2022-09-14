@@ -27,16 +27,16 @@ public:
         }
         return true;
     }
-    void NQueens(vector<vector<string>>& results, int n, int i, vector<string>& ds){
-        if(i == n){
+    void NQueens(vector<vector<string>>& results, int n, int col, vector<string>& ds){
+        if(col == n){
             results.push_back(ds);
             return;
         }
-        for(int j = 0; j < n; j++){
-            if(isSafe(i, j, ds, n)){
-            ds[i][j] = 'Q';
-            NQueens(results, n, i+1, ds);
-            ds[i][j] = '.';
+        for(int row = 0; row < n; row++){
+            if(isSafe(col, row, ds, n)){
+            ds[col][row] = 'Q';
+            NQueens(results, n, col+1, ds);
+            ds[col][row] = '.';
             }
         }
     }
