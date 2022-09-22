@@ -11,16 +11,16 @@
  */
 class Solution {
 public:
-    int height(TreeNode* root){
+    int maxDepth(TreeNode* root){
         if(!root) return 0;
-        int lh = height(root->left);
-        int rh = height(root->right); //max height of binary tree code snipet
-        if(lh == -1 || rh == -1) return -1;
-        if(abs(lh - rh) > 1) return -1;
-        return 1+ max(lh, rh);
+        int lh = maxDepth(root->left);
+        if(lh == -1) return -1;
+        int rh = maxDepth(root->right);
+        if(rh == -1) return -1;
+        if(abs(lh-rh) > 1) return -1;
+        return 1+max(lh, rh);
     }
     bool isBalanced(TreeNode* root) {
-        if(height(root) == -1) return false;
-        return true;
+        return maxDepth(root) != -1;
     }
 };
