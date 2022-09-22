@@ -13,8 +13,7 @@ class Solution {
 public:
     bool isSym(TreeNode* left, TreeNode* right){
         if(left ==NULL || right == NULL) return left == right;
-        if(left->val != right->val) return false;
-        return isSym(left->right, right->left) && isSym(left->left, right->right);
+        return left->val == right->val && isSym(left->right, right->left) && isSym(left->left, right->right);
     }
     bool isSymmetric(TreeNode* root) {
         return root == NULL || isSym(root->left, root->right);
