@@ -9,7 +9,7 @@ public:
         int high = m; 
         int medianIndex = ((m+n)+1)/2;
         while(low <= high){
-            int cut1 = (low+high)/2;
+            int cut1 = low+(high-low)/2;
             int cut2 = medianIndex-cut1;
             
             int l1 = (cut1 == 0) ? INT_MIN : nums1[cut1-1];
